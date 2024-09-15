@@ -2,6 +2,7 @@ const express = require('express');
 const axios = require('axios');
 const dotenv = require('dotenv');
 const cors = require('cors');
+const cron = require('node-cron');
 
 dotenv.config();
 const app = express();
@@ -46,4 +47,15 @@ app.get('/api/news/:id', async (req, res) => {
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
+});
+
+
+
+
+
+
+cron.schedule('*/5 * * * *', () => {
+    axios.get(`http://localhost:${PORT}`)
+        .then(() => console.log('Pinged the server to keep it awake'))
+        .catch(err => console.error('Error pinging server:', err));
 });
