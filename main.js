@@ -10,7 +10,7 @@ const GNEWS_API_URL = 'https://gnews.io/api/v4';
 const GNEWS_API_KEY = process.env.GNEWS_API_KEY;
 
 
-app.use(cors());
+app.use(cors({ origin: "*" }));
 app.use(express.json());
 
 
@@ -18,7 +18,7 @@ app.get('/api/news', async (req, res) => {
     try {
         const { query, country, category, lang } = req.query;
 
-        
+
         let url = `${GNEWS_API_URL}/top-headlines?token=${GNEWS_API_KEY}`;
         if (query) url += `&q=${query}`;
         if (country) url += `&country=${country}`;
